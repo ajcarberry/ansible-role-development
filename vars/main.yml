@@ -20,6 +20,7 @@ python_build_requirements:
   - libffi-dev
   - liblzma-dev
   - python-openssl
+  - python3-pip
   - git
 
 pyenv_install_environment: {}
