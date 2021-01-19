@@ -1,0 +1,28 @@
+---
+# Python Environment Defaults
+pyenv_home: "{{ ansible_env.HOME }}"
+pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
+
+# Initialize .bashrc scripts
+pyenv_init_shell: true
+
+# Versions to install
+pyenv_version: "v1.2.20"
+
+# Python versions to install
+pyenv_python_versions:
+  - "3.8.5"
+  - "3.7.8"
+  - "3.6.11"
+  - "2.7.18"
+
+# Set global pyenv version
+pyenv_global: "3.8.5 system"
+
+# Code-Server Defaults
+host_name: development.local
+
+owner_user: root
+owner_group: root
+
+service_owner: root

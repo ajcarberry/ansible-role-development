@@ -1,0 +1,23 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  author: acarberry
+  description: Ansible role to setup a development environment on Ubuntu
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.9.5
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - 18.04
+  galaxy_tags:
+    - system
+    - packaging
+    - development
+    - cloud
+    - ansible
+    - automation

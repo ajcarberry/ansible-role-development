@@ -1,0 +1,53 @@
+---
+
+- name: Install all Code-Server dependancies
+  apt:
+    pkg:
+      - curl
+    state: latest
+    update_cache: yes
+
+- name: Install Code-Server
+  shell:
+    cmd: "curl -fsSL https://code-server.dev/install.sh | sh"
+    creates: /usr/bin/code-server
+    warn: false
+  notify: Start Code-Server
+
+- name: reload systemd
+  command: "systemctl daemon-reload"
+  changed_when: false
+
+- name: Enable Code-Server
+  service:
+    name: "code-server@{{ service_owner }}"
+    state: started
+    enabled: yes
+
+- meta: flush_handlers
+
+- name: Install all web server dependancies
+  apt:
+    pkg:
+      - nginx
+    state: latest
+    update_cache: yes
+
+- name: Install NGINX config to host Code-Server
+  template:
+    src: code-server.j2
+    dest: /etc/nginx/sites-available/code-server
+    owner: "{{ owner_user }}"
+    group: "{{ owner_group }}"
+    mode: 0644
+  notify: Restart NGINX
+
+- name: Enable Code-Server NGINX Config
+  file:
+    src: /etc/nginx/sites-available/code-server
+    dest: /etc/nginx/sites-enabled/code-server
+    owner: "{{ owner_user }}"
+    group: "{{ owner_group }}"
+    state: link
+
+- meta: flush_handlers

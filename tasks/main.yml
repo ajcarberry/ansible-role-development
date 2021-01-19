@@ -1,0 +1,13 @@
+---
+
+# Install Python
+- import_tasks: python.yml
+
+# Install Ansible
+- import_tasks: ansible.yml
+
+# Install Code-Server
+- import_tasks: code-server.yml
+
+# Output Code-Server config details
+- import_tasks: output.yml

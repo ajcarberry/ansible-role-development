@@ -1,0 +1,11 @@
+---
+
+- name: Prepare
+  hosts: all
+  tasks:
+  - name: Install requirements
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - "aptitude"

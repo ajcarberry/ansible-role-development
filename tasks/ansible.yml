@@ -1,0 +1,27 @@
+---
+
+- name: Install ansible requirements
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "software-properties-common"
+    - "dirmngr"
+    - "aptitude"
+
+- name: Add ansible repository from PPA
+  apt_repository:
+    repo: "ppa:ansible/ansible"
+
+- name: Install ansible requirements
+  become: true
+  package:
+    name: "ansible"
+    state: present
+    update_cache: true
+
+- name: Install molecule
+  pip:
+    name: "molecule[ansible,docker,lint]"
+    executable: pip3
+    extra_args: --user
