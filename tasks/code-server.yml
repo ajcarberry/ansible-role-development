@@ -30,6 +30,8 @@
   apt:
     pkg:
       - nginx
+      - certbot
+      - python3-certbot-nginx
     state: latest
     update_cache: yes
 
