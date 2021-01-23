@@ -1,13 +1,17 @@
 ---
-# Python Environment Defaults
+# Environment Defaults
 pyenv_home: "{{ ansible_env.HOME }}"
 pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
+tfenv_root: "{{ ansible_env.HOME }}/.tfenv"
+awscli_root: "{{ ansible_env.HOME }}"
 
 # Initialize .bashrc scripts
 pyenv_init_shell: true
 
 # Versions to install
 pyenv_version: "v1.2.20"
+tfenv_version: "v2.0.0"
+awscli_version: "2.1.21"
 
 # Python versions to install
 pyenv_python_versions:
@@ -19,10 +23,17 @@ pyenv_python_versions:
 # Set global pyenv version
 pyenv_global: "3.8.5 system"
 
+# Terraform versions to install
+tfenv_terraform_versions:
+  - "0.14.5"
+  - "0.13.6"
+  - "0.12.30"
+
+# Set global terraform version
+tfenv_global: "0.14.5"
+
 # Code-Server Defaults
 host_name: development.local
-
 owner_user: root
 owner_group: root
-
 service_owner: root

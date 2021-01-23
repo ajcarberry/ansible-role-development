@@ -1,17 +1,55 @@
 ---
 
-- name: Add Apt key for official Hashicorp repo
-  apt_key:
-    url: https://apt.releases.hashicorp.com/gpg
+- name: Install tfenv and terraform requirements
+  apt:
+    name: "{{ item }}"
     state: present
+  loop:
+    - "unzip"
 
-- name: Add Hashicorp repository
-  apt_repository:
-    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bionic main"
+- name: Clone tfenv
+  git:
+    repo: https://github.com/tfutils/tfenv.git
+    dest: "{{ tfenv_root }}"
+    version: "{{ tfenv_version }}"
 
-- name: Install Terraform
-  become: true
-  package:
-    name: "terraform"
-    state: present
-    update_cache: true
+- name: Make sure .tfenv directory exists
+  file:
+    path: "{{ tfenv_root }}"
+    state: directory
+    mode: "0755"
+
+- name: Symlink tfenv to /usr/local/bin
+  file:
+    src: "{{ tfenv_root }}/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop:
+    - "tfenv"
+    - "terraform"
+
+- name: Install Terraform versions
+  command:
+    cmd: tfenv install {{ item }}
+  args:
+    creates: "{{ tfenv_root }}/versions/{{ item }}/terraform"
+  with_items: "{{ tfenv_terraform_versions }}"
+
+- name: Get current terraform version
+  shell: >-
+    set -o pipefail &&
+    terraform --version | head -1 | awk '{print $2}'
+  args:
+    executable: "/bin/bash"
+  register: tfenv_active_version
+  changed_when: false
+  failed_when: false
+
+- name: Set tfenv_global_version fact
+  set_fact:
+    tfenv_target_version: "v{{ tfenv_global }}"
+
+- name: Set tfenv global version to '{{ tfenv_global }}'
+  command:
+    cmd: tfenv use {{ tfenv_global }}
+  when: "tfenv_global is defined and tfenv_active_version.stdout != tfenv_target_version"

@@ -12,6 +12,9 @@
 # Install Terraform
 - import_tasks: terraform.yml
 
+# Install AWS CLI
+- import_tasks: aws-cli.yml
+
 # Install Code-Server
 - import_tasks: code-server.yml
 

@@ -1,0 +1,29 @@
+---
+
+- name: Install AWS CLI dependancies
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "unzip"
+    - "less"
+    - "libc6"
+    - "groff"
+
+- name: Download AWS CLI version
+  get_url:
+    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-{{ awscli_version }}.zip"
+    dest: "{{ awscli_root }}/awscliv2.zip"
+    mode: '0440'
+
+- name: Unzip AWS CLI installer
+  unarchive:
+    src: "{{ awscli_root }}/awscliv2.zip"
+    dest: "{{ awscli_root }}"
+    remote_src: yes
+
+- name: Install AWS CLI
+  command:
+    cmd: "{{ awscli_root }}/aws/install"
+  args:
+    creates: "/usr/local/aws-cli"
