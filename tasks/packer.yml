@@ -1,0 +1,17 @@
+---
+
+- name: Add Apt key for official Hashicorp repo
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add Hashicorp repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bionic main"
+
+- name: Install Packer
+  become: true
+  package:
+    name: "packer"
+    state: present
+    update_cache: true

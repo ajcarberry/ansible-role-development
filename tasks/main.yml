@@ -6,6 +6,9 @@
 # Install Ansible
 - import_tasks: ansible.yml
 
+# Install Packer
+- import_tasks: packer.yml
+
 # Install Code-Server
 - import_tasks: code-server.yml
 
