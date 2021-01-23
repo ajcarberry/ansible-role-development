@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 ansible = ">=2.9.2"
 molecule = "*"
-"molecule[docker]" = "*"
+"molecule[docker,lint]" = "*"
 docker = "*"
 
 [requires]

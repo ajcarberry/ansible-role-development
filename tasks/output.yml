@@ -5,12 +5,14 @@
     cmd: "eval echo ~{{ service_owner }}"
   register: serviceowner_home
   changed_when: false
+  # noqa 305
 
 - name: Gather Code-Server Config
   shell:
     cmd: 'cat {{ serviceowner_home.stdout }}/.config/code-server/config.yaml | grep password:'
   register: codeserver_config
   changed_when: false
+  # noqa 305
 
 - name: Output Code-Server Password
   debug:

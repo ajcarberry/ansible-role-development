@@ -126,7 +126,10 @@
     extra_args: --user
 
 - name: Add pipx to PATH
-  command: 
+  command:
     cmd: python3 -m pipx ensurepath
-    warn: no
-  ignore_errors: yes
+  register: pipx_path
+  failed_when:
+    - '"has been been added to PATH" not in pipx_path.stdout'
+  changed_when:
+    - '"Success!" in pipx_path.stdout'

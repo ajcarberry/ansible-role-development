@@ -4,7 +4,7 @@
   apt:
     pkg:
       - curl
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Install Code-Server
@@ -15,8 +15,8 @@
   notify: Start Code-Server
 
 - name: reload systemd
-  command: "systemctl daemon-reload"
-  changed_when: false
+  systemd:
+    daemon_reload: yes
 
 - name: Enable Code-Server
   service:
@@ -32,7 +32,7 @@
       - nginx
       - certbot
       - python3-certbot-nginx
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Install NGINX config to host Code-Server
