@@ -2,5 +2,12 @@
 
 - name: Converge
   hosts: all
+  vars:
+    - pyenv_python_versions:
+      - "3.8.5"
+      - "3.7.8"
+    - tfenv_terraform_versions:
+      - "0.14.5"
+      - "0.13.6"
   roles:
     - role: ansible-role-development
