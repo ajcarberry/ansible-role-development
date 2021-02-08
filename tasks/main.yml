@@ -9,6 +9,9 @@
 # Install Packer
 - import_tasks: packer.yml
 
+# Install Vagrant
+- import_tasks: vagrant.yml
+
 # Install Terraform
 - import_tasks: terraform.yml
 

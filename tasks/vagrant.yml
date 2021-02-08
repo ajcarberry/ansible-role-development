@@ -1,0 +1,23 @@
+---
+
+- name: Add Apt key for official Hashicorp repo
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add Hashicorp repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bionic main"
+
+- name: Install Vagrant
+  become: true
+  package:
+    name: "vagrant"
+    state: present
+    update_cache: true
+
+- name: Install Vagrant Plugins
+  command: vagrant plugin install {{ item }}
+  loop:
+    - vagrant-aws
+    - vagrant-aws-route53
