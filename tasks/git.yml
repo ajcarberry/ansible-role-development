@@ -1,0 +1,24 @@
+---
+
+- name: Install git
+  apt:
+    name: "git"
+    state: present
+
+- name: Configure Git username
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ github_user }}"
+
+- name: Configure Git credential cache
+  community.general.git_config:
+    name: credential.helper
+    scope: global
+    value: "cache"
+
+- name: Configure Git credential cache timeout
+  community.general.git_config:
+    name: credential.helper
+    scope: global
+    value: "'cache --timeout=3600'"

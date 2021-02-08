@@ -3,14 +3,14 @@
 # Install Python
 - import_tasks: python.yml
 
+# Install Git
+- import_tasks: git.yml
+
 # Install Ansible
 - import_tasks: ansible.yml
 
 # Install Packer
 - import_tasks: packer.yml
-
-# Install Vagrant
-- import_tasks: vagrant.yml
 
 # Install Terraform
 - import_tasks: terraform.yml
